@@ -1,0 +1,123 @@
+extends layout
+
+block content
+  form(action='/create', method='post', style='display: none;')
+    input#formname(type='text', name='charactername', value='Hero')
+    input#formfort(type='number', name='fortitude', value='1')
+    input#formreact(type='number', name='reaction', value='1')
+    input#formwill(type='number', name='will', value='1')
+    input#formcomp(type='number', name='composure', value='1')
+    input#submitchar(type='submit', value='Submit')
+  main.mdl-layout__content
+    .page-content
+      .mdl-grid.mdl-shadow--3dp
+        .mdl-cell.mdl-cell--4-col.mdl-typography--text-center
+          h4 Current Power Level
+          h3#displaytitle Pulp Hero
+          h2#displaypower 4D
+        .mdl-cell.mdl-cell--4-col.mdl-typography--text-center
+          h4 Character Name
+          .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label(style="max")
+            input#charname.mdl-textfield__input.super-text-name(type='text')
+            label.mdl-textfield__label(for='charname') Name
+        .mdl-cell.mdl-cell--4-col.mdl-typography--text-center
+          button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored(onclick='document.getElementById("submitchar").click()') Save Character
+      .mdl-grid
+        .mdl-cell.mdl-cell--4-col.mdl-typography--text-center.mdl-shadow--3dp
+          h3 Resistances
+          .mdl-grid
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              h5 Fortitude
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              h5#fortiddisplay 1
+              input#fortslider.mdl-slider.mdl-js-slider(type='range', min='1', max='7', value='1', tabindex='0')
+          .mdl-grid
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              h5 Reaction
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              h5#reactiddisplay 1
+              input#reactslider.mdl-slider.mdl-js-slider(type='range', min='1', max='7', value='1', tabindex='0')
+          .mdl-grid
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              h5 Will
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              h5#williddisplay 1
+              input#willslider.mdl-slider.mdl-js-slider(type='range', min='1', max='7', value='1', tabindex='0')
+          .mdl-grid
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              h5 Composure
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              h5#compiddisplay 1
+              input#compslider.mdl-slider.mdl-js-slider(type='range', min='1', max='7', value='1', tabindex='0')
+        .mdl-cell.mdl-cell--4-col.mdl-typography--text-center.mdl-shadow--3dp
+          h3 Powers
+          select
+            each power in ptable
+              option(value=power.id) #{power.power_name}
+          .mdl-grid
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              h5#powerdisplay 0
+              input#powerslider.mdl-slider.mdl-js-slider(type='range', min='0', max='10', value='0', tabindex='0')
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              textarea#powerdesc.mdl-textfield__input(rows='3')
+              label.mdl-textfield__label(for='powerdesc')
+          .mdl-grid
+            .mdl-cell.mdl-cell--6-col
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              select
+                each boost in btable
+                  option(value=boost.id) #{boost.boost_name}
+              br
+              br
+              button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored Add Boost
+              br
+              br
+              select
+                each complication in ctable
+                  option(value=complication.id) #{complication.complication_name}
+              br
+              br
+              button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored Add Complication
+          br
+          button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored Add Power
+        .mdl-cell.mdl-cell--4-col.mdl-typography--text-center.mdl-shadow--3dp
+          h3 Aptitudes
+          select
+            each aptitude in atable
+              option(value=aptitude.id) #{aptitude.aptitude_name}
+          .mdl-grid
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              h5#aptitudedisplay 0
+              input#aptitudeslider.mdl-slider.mdl-js-slider(type='range', min='0', max='7', value='0', tabindex='0')
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              textarea#aptitudedesc.mdl-textfield__input(rows='3')
+              label.mdl-textfield__label(for='aptitudedesc')
+          button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored Add Aptitude
+      .mdl-grid.mdl-shadow--2dp
+        .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+          h3 Advantages
+          select
+            each advantage in advtable
+              option(value=advantage.id) #{advantage.advantage_name}
+          .mdl-grid
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              h5#advantagedisplay 0
+              input#advantageslider.mdl-slider.mdl-js-slider(type='range', min='0', max='7', value='0', tabindex='0')
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              textarea#advantgedesc.mdl-textfield__input(rows='3')
+              label.mdl-textfield__label(for='advantgedesc')
+          button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored Add Advantage
+        .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+          h3 Disadvantage
+          select
+            each disadvantage in dtable
+              option(value=disadvantage.id) #{disadvantage.disadvantage_name}
+          .mdl-grid
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              h5#disadvantagedisplay 0
+              input#disadvantageslider.mdl-slider.mdl-js-slider(type='range', min='0', max='7', value='0', tabindex='0')
+            .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+              textarea#disadvantgedesc.mdl-textfield__input(rows='3')
+              label.mdl-textfield__label(for='disadvantgedesc')
+          button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored Add Disadvantage
+    script var page = new Global.CreatePage();

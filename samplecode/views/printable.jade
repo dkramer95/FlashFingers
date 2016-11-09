@@ -1,0 +1,62 @@
+doctype html
+html
+  head
+    title SUPERS!
+    link(href='/styles/style.css', rel='stylesheet')
+  body
+    .content-box
+      div
+        h2 #{character.Name}
+      .section
+        .article
+          .subHeading
+            h3 RESISTANCES
+          ul
+            li
+              .resistance-name FORTITUDE
+            li
+              #fort.resistance-box.shadow
+                b #{character.Fortitude + "D"}
+            li
+              .resistance-name REACTION
+            li
+              .resistance-box.shadow(id='react shadow')
+                b #{character.Reaction + "D"}
+            li
+              .resistance-name WILL
+            li
+              #will.resistance-box.shadow
+                b #{character.Will + "D"}
+            li
+              .resistance-name COMPOSURE
+            li
+              #comp.resistance-box.shadow
+                b #{character.Composure + "D"}
+            li
+              .competency-name.shadow COMPETENCY DICE
+            li
+              #comp_dice.resistance-box.shadow
+                b #{character.Competency_dice + "D"}
+      .section
+        .subHeading
+          h3 POWERS
+      .powers-list.info-box.shadow.article
+        //each character_power in character
+        //  #{character_power.Name}
+        //      #{character_power_boost.Name}
+        //      #{character_power_complication.Name}
+      .section
+        .small-box
+          .subHeading
+            h3 APTITUDES
+          .aptitudes-list.info-box2.shadow.article
+            //each character_aptitudes in ctable
+            //    #{character_aptitudes.Name}
+        .small-box.small-box-spacer
+          .subHeading
+            h3 ADS and DISADS
+        .ads-and-disads-list.info-box2.shadow.article
+           //each character_advantages in ctable
+           // #{character_advantages.Name}
+           //each character_disadvantages in ctable
+           // #{character_disadvantages.Name}

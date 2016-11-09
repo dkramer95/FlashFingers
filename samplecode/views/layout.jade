@@ -1,0 +1,32 @@
+doctype html
+html
+  head
+    title= title
+    script(src='/javascripts/jquery-2.2.3.min.js')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/icon?family=Material+Icons')
+    link(rel='stylesheet', href='/mdl/material.min.css')
+    script(src='/mdl/material.min.js')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/javascripts/global.js')
+  body
+    .mdl-layout.mdl-js-layout.mdl-layout__header--scroll
+      header.mdl-layout__header
+        .mdl-layout__header-row
+          span.mdl-layout-title #{title}
+          .mdl-layout-spacer
+          nav.mdl-navigation.mdl-layout--large-screen-only
+            a.mdl-navigation__link(href='/') Home
+            a.mdl-navigation__link(href='/random/') Random Character Concept
+            a.mdl-navigation__link(href='/create/') Point Buy Character
+            a.mdl-navigation__link(href='/load/') Load Character
+            a.mdl-navigation__link(href='/compare/') Character Comparison
+      .mdl-layout__drawer
+        span.mdl-layout-title Supers!
+        nav.mdl-navigation
+          a.mdl-navigation__link(href='/') Home
+          a.mdl-navigation__link(href='/random/') Random Character Concept
+          a.mdl-navigation__link(href='/create/') Point Buy Character
+          a.mdl-navigation__link(href='/load/') Load Character
+          a.mdl-navigation__link(href='/compare/') Character Comparison
+    block content

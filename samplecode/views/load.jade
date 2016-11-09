@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  main.mdl-layout__content
+    .page-content
+      .mdl-grid.mdl-shadow--3dp
+        .mdl-cell.mdl-cell--6-col.mdl-typography--text-center.mdl-shadow--2dp
+          h1 Stats
+          h3#name Hero
+          .mdl-grid
+            .mdl-cell.mdl-cell--6-col.mdl-color-text--white.mdl-color--accent
+              .mdl-grid
+                .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+                  h3 Fortitude
+                .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+                  h3#fort 1D
+            .mdl-cell.mdl-cell--6-col.mdl-color-text--white.mdl-color--accent
+              .mdl-grid
+                .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+                  h3 Reaction
+                .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+                  h3#reac 1D
+            .mdl-cell.mdl-cell--6-col.mdl-color-text--white.mdl-color--accent
+              .mdl-grid
+                .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+                  h3 Will
+                .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+                  h3#will 1D
+            .mdl-cell.mdl-cell--6-col.mdl-color-text--white.mdl-color--accent
+              .mdl-grid
+                .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+                  h3 Composure
+                .mdl-cell.mdl-cell--6-col.mdl-typography--text-center
+                  h3#comp 1D
+          button(target='_blank', onclick='window.location.href = "/printable?id=" + SUPER_ID').mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored#print Print Me
+        .mdl-cell.mdl-cell--6-col.mdl-typography--text-center.mdl-shadow--2dp
+          h1 Characters
+          each character in ctable
+            - var click = "Global.LoadPage.displaySuper(" + character.id + ")"
+            .super-loadchar-container(onclick=click)
+              .super-loadchar-itemlisting
+                h3 #{character.Name}
+  script(type='text/javascript').
+    var ctable = !{JSON.stringify(ctable)};
+    var page = new Global.LoadPage(ctable, 'name', 'fort', 'reac', 'will', 'comp');

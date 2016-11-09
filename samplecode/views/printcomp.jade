@@ -1,0 +1,74 @@
+doctype html
+html
+  head
+    title SUPERS!
+    link(href='/styles/style.css', rel='stylesheet')
+    link(rel='stylesheet', href='/mdl/material.min.css')
+    script(src='/mdl/material.min.js')
+  body
+    .content-box
+      .mdl-grid
+        .mdl-cell.mdl-cell--6-col
+          h2 #{char1.Name}
+          .section
+            .article
+              .subHeading
+                h3 RESISTANCES
+              ul
+                li
+                  .resistance-name FORTITUDE
+                li
+                  .resistance-box.shadow
+                    b #{char1.Fortitude + "D"}
+                li
+                  .resistance-name REACTION
+                li
+                  .resistance-box.shadow(class='react shadow')
+                    b #{char1.Reaction + "D"}
+                li
+                  .resistance-name WILL
+                li
+                  .resistance-box.shadow
+                    b #{char1.Will + "D"}
+                li
+                  .resistance-name COMPOSURE
+                li
+                  .resistance-box.shadow
+                    b #{char1.Composure + "D"}
+                li
+                  .competency-name.shadow COMPETENCY DICE
+                li
+                  .resistance-box.shadow
+                    b #{char1.Competency_dice + "D"}
+        .mdl-cell.mdl-cell--6-col
+          h2 #{char2.Name}
+          .section
+            .article
+              .subHeading
+                h3 RESISTANCES
+              ul
+                li
+                  .resistance-name FORTITUDE
+                li
+                  .resistance-box.shadow
+                    b #{char2.Fortitude + "D"}
+                li
+                  .resistance-name REACTION
+                li
+                  .resistance-box.shadow(class='react shadow')
+                    b #{char2.Reaction + "D"}
+                li
+                  .resistance-name WILL
+                li
+                  .resistance-box.shadow
+                    b #{char2.Will + "D"}
+                li
+                  .resistance-name COMPOSURE
+                li
+                  .resistance-box.shadow
+                    b #{char2.Composure + "D"}
+                li
+                  .competency-name.shadow COMPETENCY DICE
+                li
+                  .resistance-box.shadow
+                    b #{char2.Competency_dice + "D"}

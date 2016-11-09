@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  main.mdl-layout__content
+    .page-content
+      .mdl-grid.mdl-shadow--3dp
+        form#charform(action='/printcomp', method='get')
+          .mdl-cell.mdl-cell--6-col.mdl-typography--text-center.mdl-shadow--2dp
+            select(name='char1', form='charform')
+              each character in ctable
+                option(value='#{character.id}') #{character.Name}
+          .mdl-cell.mdl-cell--6-col.mdl-typography--text-center.mdl-shadow--2dp
+            select(name='char2', form='charform')
+              each character in ctable
+                option(value='#{character.id}') #{character.Name}
+          input(type='submit')
