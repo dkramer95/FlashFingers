@@ -1,11 +1,16 @@
 body {
     font-family: 'Antic Slab', serif;
-    color: #6C8E86;
+    color: #4E8E8D;
     font-weight: 400;
-    background-color: #DAD4D2;
+    background-color: #A4DADA;
 }
 p {
     font-size: 120%;
+}
+
+button {
+    margin-top:5%;
+    margin-left:10%;
 }
 .text-muted {
     color:#BCBB88;
@@ -27,7 +32,7 @@ p {
 #statsCanvas {
     border:1px solid #000000;
     border-top: hidden;
-    border-color: #6C8E86;
+    border-color: #4E8E8D;
 }
 
 #loginName {
