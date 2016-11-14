@@ -7,3 +7,10 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+
+// create a login form with username and password
+// submit the form to a handler
+// handler will look in mysql database for match
+// if match found, enter login page
+// else report error to the user
