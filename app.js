@@ -7,8 +7,48 @@ var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var session = require('express-session');
 
+// Orm Stuff -- Required for Project
+//orm.connect("mysql://neumont:sugarc0deit@mysql.hlaingfahim.com/donutsprinkles", function(err, db) {
+//    if (err) throw err;
+//
+//    // User Model;
+//    var User = db.define("Users", {
+//        id: Number,
+//        username: String,
+//        password: String,
+//    });
+//
+//    // Add table to the database
+//    db.sync(function (err) {
+//        if (err) throw err;
+//
+//        User.create({id: 101, username: "Test", password: "goatCheese"}, function (err) {
+//            if (err) throw err;
+//
+//            User.find({username: "Test"}, function (err, people) {
+//                if (err) throw err;
+//                });
+//            });
+//        });
+//});
+
 // mysql database connection
 var mysql = require('mysql');
+var app = express();
+var orm = require("orm");
+
+// orm stuff
+app.use(orm.express("mysql://neumont:sugarc0deit@mysql.hlaingfahim.com/donutsprinkles", {
+    define: function (db, models, next) {
+        // user model
+        models.user = db.define("Users", {
+            id: Number,
+            username: String,
+            password: String,
+        });
+            next();
+    }
+}));
 
 // route action handlers
 var index = require('./routes/index');
@@ -16,8 +56,6 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var profile = require('./routes/profile');
 var challenge = require('./routes/challenge');
-
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -59,31 +97,21 @@ var auth = function(req, res, next) {
 app.post('/login', function(req, res) {
 	// check to make sure user entered in values
 	if (validateLoginForm(req, res)) {
-		// check to see if user exists in the database
-        var user = {
-            username: req.body.username,
-            password: req.body.password
-        };
+        var username = req.body.username;
+        var password = req.body.password;
 
-        // TODO move to another function -- right now couldn't get it to work
-        var db = createDBConnection();
-        var query = "SELECT * From Users WHERE Username = '" + user.username + "'"
-                   + " AND Password = '" + user.password + "'";
-
-        db.query(query, function(err, rows) {
-            if (!err) {
-                var count = rows.length;
-
-                if (count > 0) {
-                    req.session.user = user;
-                    res.render("profile", { user: user.username});
-                } else {
-                    res.render("loginFailure");
-                }
-            } else {
-                res.send("DATABASE ERROR!");
+        req.models.user.find({ username: username, password: password }, function (err, user) {
+            if (err) {
+                res.send("SQL Error: " + err.message);
+                return;
             }
-            db.end();
+
+            if (user.length == 1) {
+                req.session.user = user[0];
+                res.render("profile", { user: user.username});
+            } else {
+                res.render("loginFailure");
+            }
         });
 	}
 });
