@@ -37,6 +37,7 @@ app.use(orm.express("mysql://neumont:sugarc0deit@mysql.hlaingfahim.com/donutspri
 var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
+var register = require('./routes/register');
 var profile = require('./routes/profile');
 var challenge = require('./routes/challenge');
 
@@ -58,6 +59,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/login', login);
+app.use('/register', register);
 app.use('/challenge', challenge);
 //app.use('/profile', profile);
 
@@ -101,6 +103,27 @@ app.post('/login', function (req, res) {
     }
 });
 
+// user registration
+app.post('/registerUser', function(req, res) {
+	if (validateRegistrationForm(req, res)) {
+		// check to make sure a user doesn't already exist
+		var username = req.body.username;
+		var password = req.body.password;
+
+		req.models.user.find({ username: username }, function (err, user) {
+			if (user.length > 0) {
+				res.send("User already exists with that username!");
+			} else {
+				// add them to the database
+				req.models.user.create({username: username, password: password}, function (err, user) {
+					if (err) throw err
+					res.render("login", user);
+				})
+			}
+		});
+	}
+});
+
 app.get('/logout', function (req, res) {
     if (req.session.user) {
         req.session.destroy();
@@ -134,6 +157,25 @@ function validateLoginForm(req, res) {
     return true;
 }
 
+function validateRegistrationForm(req, res) {
+	req.checkBody("username", "Username cannot be blank!").notEmpty();
+	req.checkBody("password", "Password cannot be blank!").notEmpty();
+	req.checkBody("confirm_password", "Confirmation Password cannot be blank!").notEmpty();
+	req.checkBody("confirm_password", "Passwords must match").equals(req.body.password);
+
+	var errors = req.validationErrors();
+	if (errors) {
+		var registrationForm = {
+			username : req.body.username,
+			password : req.body.password,
+			errors : errors,
+		};
+		res.render("registration", registrationForm);
+		return false;
+	}
+	return true;
+}
+
 app.get('/uploadChallenge', auth, function (req, res) {
     res.render("enterChallenge");
 });
@@ -146,6 +188,8 @@ app.post('/processChallenge', function (req, res) {
 });
 
 // creates a connection to our mysql database
+// We might not need this later, since we are using ORM
+// But we'll keep for now, just in case
 function createDBConnection() {
 
     // connection settings

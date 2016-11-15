@@ -5,8 +5,10 @@ html
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
 		content
-			h1(id='headerTitle')    FlashFingers | Login
-			form(action='/login', method='post')
+			h1(id='headerTitle')    FlashFingers | Registration
+			h2	Registration is quick and easy! Sign up in 10 seconds!
+
+			form(action='/registerUser', method='post')
 
 				if errors
 					ul
@@ -18,6 +20,6 @@ html
 				input(type='text', name='username' value='#{username}')
 				strong Password:
 				input(type='password', name='password' value='#{password}')
-				input(type='submit' id='submitButton' value='Login')
-
-			a(href='/register' id='registerBtn')	Register
+				strong Confirm Password:
+				input(type='password', name='confirm_password')
+				input(type='submit' id='submitButton' value='Register')

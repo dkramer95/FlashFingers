@@ -10,6 +10,12 @@ p {
     font-size: 120%;
 }
 
+a {
+	text-decoration: none;
+	border-bottom: 1px dotted #40706F;
+	color: #40706F;
+}
+
 button {
     margin-top:5%;
     margin-left:10%;
@@ -47,3 +53,30 @@ button {
     margin-top: -3%;
 }
 
+form {
+	min-width: 400px;
+	margin: 0 auto;
+	display: block;
+    font-family: 'Antic Slab', serif;
+	/* padding: 20px; */
+}
+
+form input {
+    font-family: 'Antic Slab', serif;
+	font-size: 16px;
+}
+
+form strong {
+	display: block;
+}
+
+form input[type="submit"] {
+	display: block;
+	padding: 5px;
+	margin-top: 10px;
+}
+
+#registerBtn {
+	display: inline-block;
+	padding: 5px;
+}
