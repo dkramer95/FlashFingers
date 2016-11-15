@@ -85,7 +85,7 @@ app.post('/login', function (req, res) {
 
             if (user.length == 1) {
                 req.session.user = user[0];
-                res.render("profile", {user: user.username});
+                res.render("profile", {user: user[0].username});
             } else {
                 res.render("loginFailure");
             }

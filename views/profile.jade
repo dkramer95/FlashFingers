@@ -1,11 +1,22 @@
-doctype
-html
-	head
-		link(rel='stylesheet', href='/stylesheets/style.css')
-		title Profile
+extends layout
 
-	body
-		content
-			h1 #{title}
-			h2 Welcome #{user}
-			a(href='/logout') Logout
+block content
+  header
+    #header.row
+      .col-md-6.text-left
+        h1.title-super.text-thin Flash Fingers
+      .col-md-4
+      .col-md-2.text-right
+        p#loginName Welcome, #{user}
+        a(href='/logout')   Logout
+  content
+    .pull-right
+      canvas#statsCanvas(width='300', height='900')
+    .container
+      .row.text-center
+        .col-md-3
+          .row
+            button(type='button') Enter a Challenge
+          .row
+            button(type='button') Upload a Challenge
+  footer
