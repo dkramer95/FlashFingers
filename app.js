@@ -59,12 +59,13 @@ app.use(session({
     saveUninitialized: true
 }));
 
+// checks to make sure we have an active session
 var auth = function (req, res, next) {
     if (req.session && req.session.user != null) {
         return next();
     }
     else {
-        return res.send("Authentication Failed!");
+        res.render("authenticationFailure");
     }
 };
 
@@ -77,7 +78,8 @@ app.post('/login', function (req, res) {
 
         req.models.user.find({username: username, password: password}, function (err, user) {
             if (err) {
-                res.send("SQL Error: " + err.message);
+                res.status(err.status);
+                res.render('error');
                 return;
             }
 
