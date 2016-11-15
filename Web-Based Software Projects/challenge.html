@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Antic+Slab" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="scripts/canvas.js"></script>
+    <script src="game/libraries/createjs/createjs-2015.11.26.min.js" type="text/javascript" rel="script" ></script>
+
 </head>
 <body>
 <header>
@@ -25,7 +26,16 @@
     </div>
 </header>
 <content>
+    <div class="pull-right">
+        <canvas width="300" height="900" id="statsCanvas"></canvas>
+    </div>
     <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3">
+                <canvas id="game"></canvas>
+                <script src="game/assets/scripts/setup.js" type="text/javascript" rel="script"></script>
+            </div>
+        </div>
     </div>
 </content>
 <footer>
