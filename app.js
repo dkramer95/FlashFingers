@@ -21,6 +21,14 @@ app.use(orm.express("mysql://neumont:sugarc0deit@mysql.hlaingfahim.com/donutspri
             username: String,
             password: String,
         });
+        models.challenge = db.define("Challenges", {
+            challengeId: Number,
+            userId: Number,
+            text: String,
+            difficulty: String
+        });
+        //TODO: new model and follow the pattern but not users, challenges and match database
+        //Node.js orm... Match the model to database
         next();
     }
 }));
@@ -125,6 +133,17 @@ function validateLoginForm(req, res) {
     }
     return true;
 }
+
+app.get('/uploadChallenge', auth, function (req, res) {
+    res.render("enterChallenge");
+});
+
+app.post('/processChallenge', function (req, res) {
+    var text = req.body.challengetext;
+    var diff = req.body.difficulty;
+    //Insert into database
+    res.send(text + diff);
+});
 
 // creates a connection to our mysql database
 function createDBConnection() {
