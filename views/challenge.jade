@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  header
+    #header.row
+      .col-md-6.text-left
+        h1.title-super.text-thin Flash Fingers
+      .col-md-4
+      .col-md-2.text-right
+        p#loginName Welcome, User
+        p#logout Logout
+  content
+    script(src='game/libraries/createjs/createjs-2015.11.26.min.js', type='text/javascript', rel='script')
+    .pull-right
+      canvas#statsCanvas(width='300', height='900')
+    .container
+      .row.text-center
+        .col-md-3
+          canvas#game
+          script(src='game/assets/scripts/setup.js', type='text/javascript', rel='script')
+  footer

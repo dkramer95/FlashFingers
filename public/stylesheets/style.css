@@ -1,87 +1,48 @@
-@import url('https://fonts.googleapis.com/css?family=Antic+Slab');
-
 body {
-  font-family: 'Antic Slab', serif;
-  color: #6C8E86;
-  font-weight: 400;
-  background-color: #DAD4D2;
-}
-
-form {
-  width: 190px;
-  margin: 0 auto;
-  display: block;
-  border: 1px solid #333;
-  padding: 20px;
-}
-
-form label {
-  font-size: 14px;
-  font-weight: bold;
-  display: block;
-  padding: 5px;
-}
-
-form input {
-  border: 1px solid #333;
-  font-family: "Antic Slab";
-  font-size: 15px;
-}
-
-#submitButton {
-  display: block;
-  margin-top: 10px;
-  font-family: "Antic Slab";
+    font-family: 'Antic Slab', serif;
+    color: #4E8E8D;
+    font-weight: 400;
+    background-color: #A4DADA;
+    overflow-x: hidden;
 }
 p {
-  font-size: 120%;
+    font-size: 120%;
+}
+
+button {
+    margin-top:5%;
+    margin-left:10%;
 }
 .text-muted {
-  color:#BCBB88;
+    color:#BCBB88;
 }
 .text-thin {
-  font-weight: 300;
+    font-weight: 300;
 }
 .title-super {
-  font-size: 60px;
+    font-size: 60px;
 }
 .title-logo {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 #header {
-  margin-left: 5%;
-  border-bottom-style: double;
+    margin-left: 5%;
+    border-bottom-style: double;
 }
 
 #statsCanvas {
-  border:1px solid #000000;
-  border-top: hidden;
-  border-color: #6C8E86;
+    border:1px solid #000000;
+    border-top: hidden;
+    border-color: #4E8E8D;
 }
 
 #loginName {
-  padding-right: 25%;
-  padding-top: 12%;
-  text-shadow: currentColor;
+    padding-right: 25%;
+    padding-top: 12%;
+    text-shadow: currentColor;
 }
-
-#loginFailTryAgain {
-  color: #6C8E86;
-  font-size: 30px;
-  text-align: center;
-  display: block;
-}
-
 #logout {
-  padding-right: 25%;
-  margin-top: -3%;
+    padding-right: 25%;
+    margin-top: -3%;
 }
 
-#headerTitle {
-  text-align: center;
-}
-
-.errorItem {
-  color: #c9302c;
-  list-style-position: inside;
-}

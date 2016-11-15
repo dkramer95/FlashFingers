@@ -15,6 +15,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var profile = require('./routes/profile');
+var challenge = require('./routes/challenge');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/login', login);
+app.use('/challenge', challenge);
 //app.use('/profile', profile);
 
 app.use(session({
