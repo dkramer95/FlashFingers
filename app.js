@@ -228,10 +228,15 @@ app.get('/uploadChallenge', auth, function (req, res) {
 });
 
 app.post('/processChallenge', function (req, res) {
-    var text = req.body.challengetext;
+    var userId = req.session.user.id;
+    var text = req.body.challengeText;
     var diff = req.body.difficulty;
+
     //Insert into database
-    res.send(text + diff);
+    req.models.challenge.create({user_id: userId, text: text, difficulty: diff}, function (err, challenge) {
+        if (err) {throw err; }
+    });
+    res.redirect("/profile");
 });
 
 // creates a connection to our mysql database
