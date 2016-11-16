@@ -28,8 +28,8 @@ app.use(orm.express("mysql://neumont:sugarc0deit@mysql.hlaingfahim.com/donutspri
 			winCount: Number,
 		});
         models.challenge = db.define("Challenges", {
-            challengeId: Number,
-            userId: Number,
+            challenge_id: Number,
+            user_id: Number,
             text: String,
             difficulty: String
         });
@@ -93,7 +93,7 @@ app.get('/login', function (req, res) {
 // login
 app.post('/login', function (req, res) {
 	if (req.session.user) {
-		res.send("User has been passed in redirect!:");
+		res.redirect('/profile');
 		return;	
 	}
     // check to make sure user entered in values
@@ -172,7 +172,7 @@ app.post('/updatePassword', auth, function(req, res) {
 });
 
 app.get('/profile', auth, function(req, res) {
-	res.render('profile', { user : req.session.user.username });
+	res.render('profile', { user : req.session.user });
 });
 
 app.get('/logout', function (req, res) {
