@@ -223,6 +223,23 @@ function validateRegistrationForm(req, res) {
 	return true;
 }
 
+app.get('/enterChallenge', function(req, res) {
+	res.render("enterChallenge");
+});
+
+app.get('/playChallenge', function(req, res) {
+	var db = createDBConnection();
+	var query = "SELECT * FROM `Challenges` ORDER BY Rand() LIMIT 1";
+	var text = "";
+
+	db.query(query, function(err, rows) {
+		if (err) throw err;
+		db.end();
+		text = rows[0].text;
+		res.render("challenge", { text: text });
+	});
+})
+
 app.get('/uploadChallenge', auth, function (req, res) {
     res.render("enterChallenge");
 });
@@ -249,8 +266,6 @@ app.post('/processChallenge', function (req, res) {
 });
 
 // creates a connection to our mysql database
-// We might not need this later, since we are using ORM
-// But we'll keep for now, just in case
 function createDBConnection() {
 
     // connection settings
