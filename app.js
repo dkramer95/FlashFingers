@@ -235,6 +235,15 @@ app.post('/processChallenge', function (req, res) {
     //Insert into database
     req.models.challenge.create({user_id: userId, text: text, difficulty: diff}, function (err, challenge) {
         if (err) {throw err; }
+
+        req.checkBody("challengeText", "The challenge cannot be blank!").notEmpty();
+
+        // echo back form with errors displayed
+        var errors = req.validationErrors();
+        if (errors) {
+            res.render("enterChallenge", {errors: errors});
+            return;
+        }
     });
     res.redirect("/profile");
 });
