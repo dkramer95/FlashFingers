@@ -108,6 +108,12 @@ ChallengeEntryBox.prototype.sourceText = function(text) {
 	this.words = text.split(" ").reverse();
 }
 
+ChallengeEntryBox.prototype.currentWord = function() {
+	var wordCount = this.words.length;
+	var word = this.words[wordCount - 1];
+	return word;
+}
+
 // clears out the active word if it is the correct next word in
 // the source challenge text
 ChallengeEntryBox.prototype.clearIfValid = function() {
@@ -120,6 +126,7 @@ ChallengeEntryBox.prototype.clearIfValid = function() {
 		this.draw();
 		this.correctWords++;
 		didClear = true;
+		updateWordIndicator();
 	} 
 	// word is incorrect -- put back
 	else {

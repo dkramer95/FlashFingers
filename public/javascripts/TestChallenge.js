@@ -13,12 +13,14 @@ var timeLimit = 60;
 var challengeBox = createChallengeBox();
 var raceTrack = createRaceTrack();
 
+var originalText = "";
+
 function createRaceTrack() {
 	var raceTrack = new RaceTrack();
 	raceTrack.raceCanvas.width = challengeBox.canvas.width;
 
 	// add to document
-	document.getElementById('challengeTextView').appendChild(raceTrack.raceCanvas);
+	// document.getElementById('challengeTextView').appendChild(raceTrack.raceCanvas);
 	return raceTrack;
 }
 
@@ -60,7 +62,7 @@ function createChallengeTextBox(challengeBox) {
 	var text = document.createElement("p");
 	text.setAttribute('id', 'challengeText');
 	text.innerHTML = challengeBox.challengeText;
-	document.getElementById('challengeTextView').appendChild(challengeBox.canvas);
+	// document.getElementById('challengeTextView').appendChild(challengeBox.canvas);
 }
 
 
@@ -87,7 +89,7 @@ function setupRaceTrack() {
 function startTimer() {
 	if (canPlay()) {
 		isPlaying = true;	
-		setupRaceTrack();
+		setup();
 
 		// update timer (every second)
 		var timer = setInterval(function() {
@@ -101,12 +103,59 @@ function startTimer() {
 	}
 }
 
+function setup() {
+	hideInstructions();
+	setupRaceTrack();
+	preserveChallengeText();
+	updateWordIndicator();
+}
+
+// saves the original string of text of the challenge
+function preserveChallengeText() {
+	originalText = document.getElementById('challengeTextView').innerHTML;
+}
+
+// hides the instructions at the top after we begin playing
+function hideInstructions() {
+	var instructionHeader = document.getElementById('beginTypingHeader');
+	instructionHeader.style.display = "none";
+}
+
 // called by the timer, this updates all important game info
 // every second
 function update() {
 	updateWPMCounter();
 	updateProgress();
 	updateTimer();
+}
+
+var startIndex = 0;
+var endIndex = 0;
+
+// updates the indicator of where we are in the challenge text
+function updateWordIndicator() {
+	var curWord = challengeBox.currentWord();
+	var textElement = document.getElementById('challengeTextView');
+	var text = getHighlightedString(originalText, curWord);
+	textElement.innerHTML = text;
+
+	// for some reason, these elements were disappearing when the innerHTML
+	// is changed, so we have to reappend them each time the text is changed
+	textElement.appendChild(challengeBox.canvas);
+	textElement.appendChild(raceTrack.raceCanvas);
+}
+
+function getHighlightedString(sourceText, curWord) {
+	// update indexes
+	startIndex = sourceText.indexOf(curWord, endIndex);
+	endIndex = (startIndex + curWord.length);
+
+	// create string with highlighting
+	var resultStr = "";
+	var highlightedStr = '<span id="wordHighlight">' + sourceText.substr(startIndex, curWord.length) + '</span>';
+	resultStr = sourceText.substr(0, startIndex) + highlightedStr + sourceText.substr(endIndex);
+
+	return resultStr;
 }
 
 // updates the WPM indicator to the user
@@ -118,7 +167,14 @@ function updateWPMCounter() {
 
 // updates the progress indicator to the user
 function updateProgress() {
-	raceTrack.setProgress(challengeBox.correctWords);	
+	if (madeProgress()) {
+		raceTrack.setProgress(challengeBox.correctWords);	
+	}
+}
+
+function madeProgress() {
+	var madeProgress = (challengeBox.correctWords > raceTrack.progress);
+	return madeProgress;
 }
 
 // updates the timer indicator to the user

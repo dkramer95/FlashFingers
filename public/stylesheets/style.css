@@ -183,3 +183,11 @@ form input[type="submit"] {
 	font-size: 30px;
 	text-align: center;
 }
+
+#wordHighlight {
+	padding: 2px;
+	background: rgba(0, 90, 20, 0.25);
+	border: 1px solid #080;
+	font-weight: bold;
+	border-radius: 5px;
+}
