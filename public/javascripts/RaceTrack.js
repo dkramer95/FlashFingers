@@ -6,6 +6,7 @@ function RaceTrack() {
 
 	this.progress = 0;	// words completed
 	this.wordCount = 0;
+
 	this.draw();
 }
 
@@ -34,28 +35,60 @@ RaceTrack.prototype.draw = function() {
 	ctx.fillStyle = "#222";
 	ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-	var width = 30;
-	var height = 20;
-	
-	// calculate progress position
-	var x = (this.raceCanvas.width / this.wordCount) * this.progress;
-	var y = (this.raceCanvas.height - height) / 2;
+	this.drawLines(ctx, canvasWidth, canvasHeight);
+	this.drawPlayer(ctx, canvasWidth, canvasHeight);
+}
 
+// draws the race track lines
+RaceTrack.prototype.drawLines = function(ctx, canvasWidth, canvasHeight) {
+	const lineWidth = 30;
+	const lineGap = 10;
+	const lineHeight = 10;
 
-	// draw lines
+	var lineCount = (canvasWidth) / (lineWidth + lineGap);
+
+	var lineX = 0;
+	var lineY = (canvasHeight - lineHeight) / 2;
+
+	ctx.fillStyle = "#EF4";
+
+	for (var j = 0; j < lineCount; ++j) {
+		ctx.fillRect(lineX, lineY, lineWidth, lineHeight);
+		lineX += lineWidth + lineGap;	
+	}
+
 	ctx.fillStyle = "#666";
-
-	// start line
+	
+	// starting line
 	ctx.fillRect(0, 0, 10, canvasHeight);
-
-	// middle line
-	ctx.fillRect(0, canvasHeight / 2, canvasWidth, 2);
 
 	// finish line
 	ctx.fillRect(canvasWidth - 10, 0, 10, canvasHeight);
+}
 
-	// draw player
-	ctx.fillStyle = "#FF0";
-	ctx.fillRect(x, y, width, height);
+// generate random sprite
+var spriteNum = parseInt(Math.random() * 3);
+
+// sprite image needed to draw from
+var spriteImg = document.createElement("img");
+spriteImg.setAttribute('src', '/images/KawaiiCats.png');
+
+// draws the player sprite onto the race track
+RaceTrack.prototype.drawPlayer = function(ctx, canvasWidth, canvasHeight) {
+	// sprite dimensions
+	const spriteWidth = 64;
+	const spriteHeight = 40;
+
+	// offset in sprite sheet
+	var offsetX = (spriteNum * spriteWidth);
+	var offsetY = 0;
+
+	var playerX = (canvasWidth / this.wordCount) * this.progress;
+	var playerY = (canvasHeight - spriteHeight) / 2;
+
+	// draw sprite
+	ctx.drawImage(spriteImg, offsetX, offsetY, spriteWidth, spriteHeight,
+				  playerX, playerY, spriteWidth, spriteHeight);
 
 }
+
