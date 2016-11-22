@@ -51,9 +51,12 @@ ChallengeEntryBox.prototype.draw = function() {
 	this.drawCursor(ctx);
 }
 
+// initial starting offset from the left edge
+var offsetX = 10;
+
 // Draws text to the screen
 ChallengeEntryBox.prototype.drawText = function(ctx) {
-	var x = 5;
+	var x = offsetX;
 	var y = (this.height + this.textStyle.fontSize) / 2.5;
 
 	ctx.fillStyle = this.bgColor; 
@@ -69,7 +72,7 @@ ChallengeEntryBox.prototype.drawCursor = function(ctx) {
 	var textWidth = ctx.measureText(this.textBuffer).width;
 	var cursorWidth = 10;
 	var cursorHeight = this.height - 10;
-	var cursorX = (textWidth) + 5;
+	var cursorX = (textWidth) + offsetX;
 	var cursorY = (this.height - cursorHeight) / 2;
 	ctx.fillRect(cursorX, cursorY, cursorWidth, cursorHeight);
 }
@@ -147,7 +150,6 @@ ChallengeEntryBox.prototype.advance = function() {
 	}
 	// word is incorrect somehow
 	else {
-		// this.textStyle.color = this.errorColor;
 		this.textStyle.color = this.errorColor; 
 	}
 	this.words.push(nextWord);

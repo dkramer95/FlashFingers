@@ -32,9 +32,9 @@ function playGame() {
 function createChallengeBox() {
 	var challengeBox = new ChallengeEntryBox(new TextStyle('Antic Slab', 40), 750, 50);
 		challengeBox.colors({
-			errorColor: "#F21",
-			correctColor : "#3F7",
-			bgColor : "#333",
+			errorColor: "#E11",
+			correctColor : "#2B1",
+			bgColor : "#EEE",
 		});
 
 		window.addEventListener('keypress', function(e) {

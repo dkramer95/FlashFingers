@@ -99,6 +99,16 @@ form input[type="submit"] {
 	background: #fff;
 	width: 800px;
 	padding: 20px;
+	font-size: 25px;
+}
+
+#entryBoxCanvas {
+	margin: 5px auto;
+	border-radius: 5px;
+}
+
+#raceCanvas {
+	margin: 5px auto;
 }
 
 #outOfTime {
@@ -185,9 +195,7 @@ form input[type="submit"] {
 }
 
 #wordHighlight {
-	padding: 2px;
+	padding: 1px 5px;
 	background: rgba(0, 90, 20, 0.25);
-	border: 1px solid #080;
 	font-weight: bold;
-	border-radius: 5px;
 }
