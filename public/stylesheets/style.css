@@ -60,6 +60,7 @@ button {
 
 #beginTypingHeader {
 	text-align: center;
+	display: block;
 }
 
 form {
@@ -90,13 +91,31 @@ form input[type="submit"] {
 	padding: 5px;
 }
 
+
 #challengeTextView {
 	display: block;
 	margin: 50px;
-	border: 2px solid #4#8E8D;
+	border: 2px solid #4E8E8D;
 	background: #fff;
 	width: 800px;
 	padding: 20px;
+}
+
+#outOfTime {
+	width: 500px;
+	z-index: 999;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 10%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+	background: rgba(150, 0, 20, 0.8);
+	color: #FFF;
+	border-radius: 15px;
+	box-shadow: 1px 1px 5px #111;
+	text-align: center;
 }
 
 #gameOver {
@@ -140,4 +159,27 @@ form input[type="submit"] {
 	padding: 5px;
 	margin: 0 auto;
 	font-size: 24px;
+}
+
+#playAgainButton:hover {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+#timer {
+	background: #FFF;
+	border: 2px solid #4E8E8D;
+	width: 75px;
+	height: 75px;
+ 	/* makes a circle */	
+	border-radius: 50%;
+	vertical-align: middle;
+	float: right;
+	margin: 5px;
+}
+
+#timer h3 {
+	color: #4E8E8D;
+	vertical-align: middle;
+	font-size: 30px;
+	text-align: center;
 }
