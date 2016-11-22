@@ -72,8 +72,8 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
 	cookie: {
-		maxAge: 60000
-	}
+		// maxAge: 24 * 60 * 60
+	},
 }));
 
 // checks to make sure we have an active session
@@ -267,25 +267,23 @@ function sanitizeChallengeInput(text) {
 app.post('/processChallenge', function (req, res) {
     var userId = req.session.user.id;
     var text = req.body.challengeText;
+    var diff = req.body.difficulty;
 
 	text = sanitizeChallengeInput(text);
 	req.body.challengeText = text;
+	req.checkBody("challengeText", "The challenge cannot be blank!").notEmpty();
 
-	// maximum of 
-    var diff = req.body.difficulty;
+	// echo back form with errors displayed
+	var errors = req.validationErrors();
+	if (errors) {
+		res.render("enterChallenge", {errors: errors});
+		return;
+	}
 
-    //Insert into database
+    //Insert into database (it's valid at this point)
     req.models.challenge.create({user_id: userId, text: text, difficulty: diff}, function (err, challenge) {
         if (err) {throw err; }
 
-        req.checkBody("challengeText", "The challenge cannot be blank!").notEmpty();
-
-        // echo back form with errors displayed
-        var errors = req.validationErrors();
-        if (errors) {
-            res.render("enterChallenge", {errors: errors});
-            return;
-        }
     });
     res.redirect("/profile");
 });
