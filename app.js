@@ -21,9 +21,15 @@ app.use(orm.express("mysql://neumont:sugarc0deit@mysql.hlaingfahim.com/donutspri
             username: String,
             password: String,
         });
+		// profile model
+		models.profile = db.define("Profiles", {
+			userId: Number,
+			raceCount: Number,
+			winCount: Number,
+		});
         models.challenge = db.define("Challenges", {
-            challengeId: Number,
-            userId: Number,
+            challenge_id: Number,
+            user_id: Number,
             text: String,
             difficulty: String
         });
@@ -35,10 +41,9 @@ app.use(orm.express("mysql://neumont:sugarc0deit@mysql.hlaingfahim.com/donutspri
 
 // route action handlers
 var index = require('./routes/index');
-var users = require('./routes/users');
 var login = require('./routes/login');
 var register = require('./routes/register');
-var profile = require('./routes/profile');
+// var profile = require('./routes/profile');
 var challenge = require('./routes/challenge');
 
 // view engine setup
@@ -57,16 +62,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // url mapping to actions
 app.use('/', index);
-app.use('/users', users);
 app.use('/login', login);
 app.use('/register', register);
 app.use('/challenge', challenge);
-//app.use('/profile', profile);
+// app.use('/profile', profile);
 
 app.use(session({
     secret: 'super-duper-secret-string',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+	cookie: {
+		maxAge: 60000
+	}
 }));
 
 // checks to make sure we have an active session
@@ -79,14 +86,23 @@ var auth = function (req, res, next) {
     }
 };
 
+app.get('/login', function (req, res) {
+	res.send("hello: " + req.session.user);
+});
+
 // login
 app.post('/login', function (req, res) {
+	if (req.session.user) {
+		res.redirect('/profile');
+		return;	
+	}
     // check to make sure user entered in values
     if (validateLoginForm(req, res)) {
         var username = req.body.username;
         var password = req.body.password;
+		var User = req.models.user;
 
-        req.models.user.find({username: username, password: password}, function (err, user) {
+        User.find({username: username, password: password}, function (err, user) {
             if (err) {
                 res.status(err.status);
                 res.render('error');
@@ -95,7 +111,7 @@ app.post('/login', function (req, res) {
 
             if (user.length == 1) {
                 req.session.user = user[0];
-                res.render("profile", {user: user[0].username});
+				res.redirect('/profile');
             } else {
                 res.render("loginFailure");
             }
@@ -110,18 +126,53 @@ app.post('/registerUser', function(req, res) {
 		var username = req.body.username;
 		var password = req.body.password;
 
-		req.models.user.find({ username: username }, function (err, user) {
-			if (user.length > 0) {
-				res.send("User already exists with that username!");
+		req.models.user.exists({ username: username }, function(err, exists) {
+			if (exists) {
+				//TODO make this display in registration screen!!!
+				res.send("User already exists with that username!");	
 			} else {
 				// add them to the database
 				req.models.user.create({username: username, password: password}, function (err, user) {
 					if (err) throw err
-					res.render("login", user);
-				})
+					res.redirect('/login');
+				});
 			}
 		});
 	}
+});
+
+app.get('/changePassword', auth, function(req, res) {
+	res.render('changePassword');
+});
+
+
+// handler for updating user password
+app.post('/updatePassword', auth, function(req, res) {
+	var newPassword = req.body.new_password;
+	var confirmNewPassword = req.body.confirm_new_password;
+
+	req.checkBody("confirm_new_password", "Passwords must match").equals(newPassword);
+
+	// validate new password
+	var errors = req.validationErrors();
+	if (errors) {
+		res.render("changePassword", { errors: errors });
+		return;
+	}
+
+	// update in the database
+	var activeUser = req.session.user;
+
+	req.models.user.find({ username: activeUser.username }).each(function (user) {
+		user.password = newPassword;	
+	}).save(function(err) {
+		if (err) throw err;
+		res.redirect('/profile');
+	});
+});
+
+app.get('/profile', auth, function(req, res) {
+	res.render('profile', { user : req.session.user });
 });
 
 app.get('/logout', function (req, res) {
@@ -132,10 +183,6 @@ app.get('/logout', function (req, res) {
         // already signed out, go back to login screen
         res.redirect("login");
     }
-});
-
-app.get('/profile', auth, function (req, res) {
-    res.render("profile");
 });
 
 // validates a login form by ensuring that both username
@@ -176,20 +223,49 @@ function validateRegistrationForm(req, res) {
 	return true;
 }
 
+app.get('/enterChallenge', function(req, res) {
+	res.render("enterChallenge");
+});
+
+app.get('/playChallenge', function(req, res) {
+	var db = createDBConnection();
+	var query = "SELECT * FROM `Challenges` ORDER BY Rand() LIMIT 1";
+	var text = "";
+
+	db.query(query, function(err, rows) {
+		if (err) throw err;
+		db.end();
+		text = rows[0].text;
+		res.render("challenge", { text: text });
+	});
+})
+
 app.get('/uploadChallenge', auth, function (req, res) {
     res.render("enterChallenge");
 });
 
 app.post('/processChallenge', function (req, res) {
-    var text = req.body.challengetext;
+    var userId = req.session.user.id;
+    var text = req.body.challengeText;
     var diff = req.body.difficulty;
+
     //Insert into database
-    res.send(text + diff);
+    req.models.challenge.create({user_id: userId, text: text, difficulty: diff}, function (err, challenge) {
+        if (err) {throw err; }
+
+        req.checkBody("challengeText", "The challenge cannot be blank!").notEmpty();
+
+        // echo back form with errors displayed
+        var errors = req.validationErrors();
+        if (errors) {
+            res.render("enterChallenge", {errors: errors});
+            return;
+        }
+    });
+    res.redirect("/profile");
 });
 
 // creates a connection to our mysql database
-// We might not need this later, since we are using ORM
-// But we'll keep for now, just in case
 function createDBConnection() {
 
     // connection settings

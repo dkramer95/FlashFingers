@@ -1,14 +1,22 @@
 doctype html
 html
+  head
+    title FlashFingers | Upload Challenge
+    link(rel='stylesheet', href='/stylesheets/style.css')
   body
     content
+        if errors
+            ul
+                for error in errors
+                    li(class='errorItem')!= error.msg
       form(action='/processChallenge', method='post')
         strong Challenge:
-        input(type='text', name='challengetext', value='')
-        input#submitButton(type='submit', value='Submit')
-        input(name='difficulty', type='radio', value='Easy')
+        textarea(rows='5', cols='50', name='challengeText' id='challengeText')
+        br
+        input(name='difficulty', type='radio', value='Easy' checked=true)
         | Easy
         input(name='difficulty', type='radio', value='Medium')
         | Medium
         input(name='difficulty', type='radio', value='Hard')
         | Hard
+        input#submitButton(type='submit', value='Submit')

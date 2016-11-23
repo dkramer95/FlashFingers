@@ -7,7 +7,7 @@ block content
         h1.title-super.text-thin Flash Fingers
       .col-md-4
       .col-md-2.text-right
-        p#loginName Welcome, #{user}
+        p#loginName Welcome, #{user.username}
         a(href='/logout')   Logout
   content
     .pull-right
@@ -16,7 +16,12 @@ block content
       .row.text-center
         .col-md-3
           .row
+           a(href='/playChallenge')
             button(type='button') Enter a Challenge
           .row
-            button(type='button') Upload a Challenge
+            a(href='/uploadChallenge')
+             button(type='button') Upload a Challenge
+          .row
+            a(href='/changePassword')
+             button(type='button') Change Password
   footer
