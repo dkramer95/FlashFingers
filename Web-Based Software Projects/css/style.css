@@ -2,7 +2,7 @@ body {
     font-family: 'Antic Slab', serif;
     color: #4E8E8D;
     font-weight: 400;
-    background-color: #A4DADA;
+    background-color: #FFFFF1;
     overflow-x: hidden;
 }
 p {
@@ -12,6 +12,12 @@ p {
 button {
     margin-top:5%;
     margin-left:10%;
+    border-radius: 10%;
+    padding: 16px;
+    font-size: 20px;
+    background-color: white;
+    border: 2px solid #4E8E8D;
+    box-shadow: 10px 10px 5px #888888;
 }
 .text-muted {
     color:#BCBB88;
@@ -26,8 +32,9 @@ button {
     margin-top: 20px;
 }
 #header {
-    margin-left: 5%;
     border-bottom-style: double;
+        box-shadow: 5px 5px 5px #888888;
+
 }
 
 #statsCanvas {
@@ -38,11 +45,14 @@ button {
 
 #loginName {
     padding-right: 25%;
-    padding-top: 12%;
+    padding-top: 15%;
     text-shadow: currentColor;
 }
 #logout {
     padding-right: 25%;
     margin-top: -3%;
+}
+#challengeSelect {
+    margin-right: 35%;
 }
 
