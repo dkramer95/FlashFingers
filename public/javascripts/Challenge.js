@@ -98,6 +98,7 @@ Challenge.prototype.hideElements = function() {
     })
 }
 
+// creates the WPM indicator
 Challenge.prototype.createWPMCounter = function() {
     var wpmCounter = document.createElement('h2');
     wpmCounter.setAttribute('id', 'wpmCounter');
@@ -107,6 +108,7 @@ Challenge.prototype.createWPMCounter = function() {
     return wpmCounter;
 }
 
+// starts the game loop timer
 Challenge.prototype.start = function() {
     var challenge = this;
     if (!challenge.canPlay) { return; }
@@ -118,7 +120,6 @@ Challenge.prototype.start = function() {
         if (challenge.didWinGame() || challenge.ranOutOfTime()) {
             clearInterval(timer);
             timer = null;
-            challenge.canPlay = false;
             challenge.clearGame();
         } else {
             challenge.timerTick();
@@ -126,9 +127,12 @@ Challenge.prototype.start = function() {
     }, 1000);
 }
 
+// clears out the game after we have played.. this is
+// to prevent player after it is over
 Challenge.prototype.clearGame = function() {
     this.elapsedSeconds = 0;
     this.isPlaying = false;
+	this.canPlay = false;
     
     this.challengeBox.words = [];
 }
@@ -140,6 +144,8 @@ Challenge.prototype.timerTick = function() {
     this.timer.update(this.timeRemaining);
 }
 
+// checks to see if we won the game and if we did
+// renders the game over overlay
 Challenge.prototype.didWinGame = function() {
     var didWin = false;
 	if (this.challengeBox.words.length == 0) {
@@ -150,15 +156,18 @@ Challenge.prototype.didWinGame = function() {
 	return didWin;
 }
 
+// checks to see if we ran out of time and if we did
+// renders the out of time overlay
 Challenge.prototype.ranOutOfTime = function() {
     var ranOut = false;
-	if (this.elapsedSeconds >= this.timeLimit) {
+	if (this.elapsedSeconds > this.timeLimit) {
 		ranOut = true;	
 		renderOutOfTime();
 	}
 	return ranOut;
 }
 
+// updates the WPM indicator
 Challenge.prototype.updateWPMCounter = function() {
     var wpm = this.getWPM();
     this.wpmCounter.innerHTML = "WPM: " + wpm;

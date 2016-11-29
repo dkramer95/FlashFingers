@@ -27,7 +27,7 @@ CircleTimer.prototype.draw = function() {
 	ctx.clearRect(0, 0, this.width, this.height);
 
 	this.drawBG(ctx);
-//	this.drawRemainderTrack(ctx);
+	this.drawRemainderTrack(ctx);
 	this.drawTimeDisplay(ctx);
 }
 
@@ -43,11 +43,16 @@ CircleTimer.prototype.drawBG = function(ctx) {
 	ctx.fill();
 }
 
+function radians(angle) {
+	var radians = (angle * (Math.PI / 180));
+	return radians;
+}
+
 CircleTimer.prototype.drawRemainderTrack = function(ctx) {
-	var startAngle = (-90 * (Math.PI / 180));
+	var startAngle = radians(-90);
 	var multiplier = (360 / this.timeLimit);
-	var endAngle = (-90 + (this.elapsedSeconds * multiplier) * (Math.PI / 180)); 
-	
+	var endAngle = radians((-90 + this.elapsedSeconds * multiplier));
+
 	var centerX = (this.width / 2);
 	var centerY = (this.height / 2);
 
