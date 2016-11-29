@@ -1,4 +1,3 @@
-
 // creates a new Challenge Entry text box
 function ChallengeEntryBox(textStyle, width, height) {
 	this.textStyle = textStyle;
@@ -111,6 +110,7 @@ ChallengeEntryBox.prototype.sourceText = function(text) {
 	this.words = text.split(" ").reverse();
 }
 
+
 ChallengeEntryBox.prototype.currentWord = function() {
 	var wordCount = this.words.length;
 	var word = this.words[wordCount - 1];
@@ -129,7 +129,7 @@ ChallengeEntryBox.prototype.clearIfValid = function() {
 		this.draw();
 		this.correctWords++;
 		didClear = true;
-		updateWordIndicator();
+        challenge.updateWordIndicator();
 	} 
 	// word is incorrect -- put back
 	else {

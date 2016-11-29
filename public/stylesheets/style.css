@@ -56,11 +56,13 @@ button {
 #wpmCounter {
 	font-size: 50px;
 	text-align: center;
+	visibility: hidden;
 }
 
 #beginTypingHeader {
 	text-align: center;
 	display: block;
+	margin: 10px;
 }
 
 form {
@@ -91,10 +93,15 @@ form input[type="submit"] {
 	padding: 5px;
 }
 
+#challengeContainer {
+	margin: 0 auto;
+	max-width: 980px;
+	display: block;
+}
 
 #challengeTextView {
 	display: block;
-	margin: 50px;
+	margin: 5px auto;
 	border: 2px solid #4E8E8D;
 	background: #fff;
 	width: 800px;
@@ -176,23 +183,17 @@ form input[type="submit"] {
 }
 
 #timer {
-	background: #FFF;
-	border: 2px solid #4E8E8D;
-	width: 75px;
-	height: 75px;
- 	/* makes a circle */	
-	border-radius: 50%;
 	vertical-align: middle;
-	float: right;
-	margin: 5px;
+	margin: 10px auto;
+	display: block;
 }
 
-#timer h3 {
-	color: #4E8E8D;
-	vertical-align: middle;
-	font-size: 30px;
-	text-align: center;
-}
+/* #timer h3 { */
+/* 	color: #4E8E8D; */
+/* 	vertical-align: middle; */
+/* 	font-size: 30px; */
+/* 	text-align: center; */
+/* } */
 
 #wordHighlight {
 	padding: 1px 5px;
