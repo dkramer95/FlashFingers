@@ -29,6 +29,7 @@ function loadScripts() {
 window.onload = function() {
 	loadScripts();
 	console.log('scripts loaded..');
+	// text = "DEBUG";
 }
 
 // instance of this challenge
@@ -50,16 +51,18 @@ function Challenge(text) {
 	this.elapsedSeconds = false,
 
     // max allowed time limit
-	this.timeLimit = 60,
+	this.timeLimit = 90,
     this.timeRemaining = this.timeLimit,
     this.container = document.getElementById('challengeContainer'),
     this.timer = this.createTimerView(),
     this.wpmCounter = this.createWPMCounter(),
+	this.accuracyCounter = this.createAccuracyCounter(),
     this.challengeBox = this.createChallengeBox(),
 	this.raceTrack = this.createRaceTrack(),
     this.textView = this.createTextView(),
     this.startIndex = 0,
     this.endIndex = 0,
+	this.typoCount = 0,
 	this.highlightStyle = this.normalHighlight;
     
     this.canPlay = true,
@@ -81,6 +84,10 @@ var beginKeyListener = function(e) {
         
         instance.beginPlay();
     }
+}
+
+Challenge.prototype.addTypo = function() {
+	this.typoCount++;
 }
 
 // initializes the very beginning state of the game prior
@@ -118,6 +125,15 @@ Challenge.prototype.createWPMCounter = function() {
     return wpmCounter;
 }
 
+Challenge.prototype.createAccuracyCounter = function() {
+	var accuracyCounter = document.createElement('h3');
+	accuracyCounter.setAttribute('id', 'accuracyCounter');
+	accuracyCounter.innerHTML = "Accuracy: ";
+	accuracyCounter.style.visibility = "hidden";
+	this.append(accuracyCounter);
+	return accuracyCounter;
+}
+
 // starts the game loop timer
 Challenge.prototype.start = function() {
     var challenge = this;
@@ -143,12 +159,50 @@ Challenge.prototype.clearGame = function() {
     this.elapsedSeconds = 0;
     this.isPlaying = false;
 	this.canPlay = false;
-    
     this.challengeBox.words = [];
 
 	var animation = new Animation([this.timer.timerCanvas]);
+	this.animateRainbow();
+
 	animation.fadeOut(1000);
 }
+
+// eye candy ending animation
+Challenge.prototype.animateRainbow = function() {
+	var raceCanvas = this.raceTrack.raceCanvas;
+	var ctx = raceCanvas.getContext('2d');
+
+	var width = raceCanvas.width;
+	var height = raceCanvas.height;
+
+	var currentWidth = 0;
+
+	var challenge = this;
+	var velX = 0.5;
+
+	var timer = setInterval(function() {
+		if (currentWidth > width + 100) {
+			clearInterval(timer);
+		} else {
+			var gradient = ctx.createLinearGradient(0, 0, currentWidth, 0);
+			gradient.addColorStop(0, "red");
+			gradient.addColorStop(1 / 6, "orange");
+			gradient.addColorStop(2 / 6, "yellow");
+			gradient.addColorStop(3 / 6, "green");
+			gradient.addColorStop(4 / 6, "blue");
+			gradient.addColorStop(5 / 6, "indigo");
+			gradient.addColorStop(1, "violet");
+
+			ctx.fillStyle = gradient;
+			ctx.fillRect(0, 0, currentWidth, height);
+			velX *= 1.08;
+			currentWidth += velX;
+			challenge.raceTrack.wordCount = currentWidth;
+			challenge.raceTrack.drawPlayer(ctx, width, height);
+		}
+	}, 20);
+}
+
 
 // Called every second to update timer stuff
 Challenge.prototype.timerTick = function() {
@@ -163,7 +217,8 @@ Challenge.prototype.didWinGame = function() {
     var didWin = false;
 	if (this.challengeBox.words.length == 0) {
 		var wpm = this.getWPM(this.elapsedSeconds);
-		renderGameOver(wpm);
+		var accuracy = this.getAccuracy();
+		renderGameOver(wpm, accuracy);
 		didWin = true;
 	}
 	return didWin;
@@ -188,7 +243,9 @@ Challenge.prototype.updateWPMCounter = function() {
 
 // initializes the view of this challenge 
 Challenge.prototype.initView = function() {    
-    var animation = new Animation([this.timer.timerCanvas, this.textView, this.wpmCounter]);
+    var animation = new Animation([this.timer.timerCanvas, this.textView,
+		this.wpmCounter, this.accuracyCounter]);
+
     animation.fadeIn(1000);
 }
 
@@ -209,6 +266,7 @@ Challenge.prototype.update = function() {
     challenge.raceTrack.setProgress(challenge.challengeBox.correctWords);
     challenge.raceTrack.draw();
     challenge.updateWPMCounter();
+	challenge.updateAccuracy();
 }
 
 Challenge.prototype.madeProgress = function() {
@@ -230,12 +288,18 @@ Challenge.prototype.updateWordIndicator = function() {
     textElement.appendChild(this.raceTrack.raceCanvas);
 }
 
+Challenge.prototype.updateAccuracy = function() {
+	var accuracy = this.getAccuracy();
+	this.accuracyCounter.innerHTML = "Accuracy: " + accuracy + "%";
+}
 // updates our index positions in the text view for highlighting purposes
 Challenge.prototype.updateIndexes = function(curWord) {
     this.startIndex = this.originalText.indexOf(curWord, this.endIndex);
     this.endIndex = (this.startIndex + curWord.length);
 }
 
+// Gets the correct string with span styling for highlighting
+// the word we're on
 Challenge.prototype.getHighlightedString = function(sourceText, curWord) {
 	var startIndex = sourceText.indexOf(curWord, this.endIndex);
 	var endIndex = (startIndex + curWord.length);
@@ -318,7 +382,7 @@ function renderOutOfTime() {
 }
 
 // draws the game over screen
-function renderGameOver(wpm) {
+function renderGameOver(wpm, accuracy) {
 	// container
 	var overlay = document.createElement("div");
 	overlay.setAttribute('id', 'gameOver');
@@ -333,7 +397,7 @@ function renderGameOver(wpm) {
 	var resultMessage = getResultMessage(wpm);
 
 	results.setAttribute('id', 'gameOverResults');
-	results.innerHTML = "WPM: " + wpm + "<br> " + resultMessage;
+	results.innerHTML = "WPM: " + wpm + "<br>" + "Accuracy: " + accuracy + "% <br>" + resultMessage;
 
 	var button = createPlayAgainButton();
 	overlay.appendChild(button);
@@ -381,4 +445,13 @@ Challenge.prototype.getWPM = function() {
     
 	var WPM = parseInt((this.challengeBox.correctWords * 60) / this.elapsedSeconds);
 	return WPM;
+}
+
+// calculates accuracy
+Challenge.prototype.getAccuracy = function() {
+	var totalLetters = this.originalText.length;
+	var accuracy = (this.typoCount >= totalLetters) ? 0 :
+					Math.abs((this.typoCount - totalLetters) / totalLetters) * 100;	
+	accuracy = accuracy.toFixed(2);
+	return accuracy;
 }

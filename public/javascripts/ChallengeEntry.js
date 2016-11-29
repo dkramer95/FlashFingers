@@ -84,6 +84,7 @@ ChallengeEntryBox.prototype.addToPage = function() {
 // Key press handler
 ChallengeEntryBox.prototype.keyPressed = function(e) {
 	// don't add to input if box is full
+	this.lastKeyPressed = e.keyCode;
 	if (this.isFull()) { return; }
 	
 	switch (e.keyCode) {
@@ -166,14 +167,22 @@ ChallengeEntryBox.prototype.advance = function() {
 	else {
 		this.textStyle.color = this.errorColor; 
 		challenge.highlightStyle = challenge.errorHighlight;
+
+		// add typo if we're not pressing backspace
+		if (this.lastKeyPressed != 8) {
+			challenge.addTypo();
+		}
 	}
 	this.words.push(nextWord);
 	this.draw();
 	challenge.updateWordIndicator();
 }
 
+ChallengeEntryBox.prototype.lastKeyPressed;
+
 // special handler for keydown event
 ChallengeEntryBox.prototype.keyDown = function(e) {
+	this.lastKeyPressed = e.keyCode;
 	switch (e.keyCode) {
 		case 8:		// backspace key
 			this.backSpace();

@@ -104,8 +104,9 @@ app.post('/login', function (req, res) {
 
         User.find({username: username, password: password}, function (err, user) {
             if (err) {
-                res.status(err.status);
-                res.render('error');
+                // res.status(err.status);
+                // res.render('error');
+				res.send("An error occurred: " + error.message);
                 return;
             }
 

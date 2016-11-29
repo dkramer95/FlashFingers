@@ -59,6 +59,10 @@ button {
 	visibility: hidden;
 }
 
+#accuracyCounter {
+	text-align: center;
+}
+
 #beginTypingHeader {
 	text-align: center;
 	display: block;
