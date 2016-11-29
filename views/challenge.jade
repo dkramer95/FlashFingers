@@ -13,9 +13,22 @@ block content
     script(src='game/libraries/createjs/createjs-2015.11.26.min.js', type='text/javascript', rel='script')
     .pull-right
       canvas#statsCanvas(width='300', height='900')
-    .container
-      .row.text-center
-        .col-md-3
-          canvas#game
-          script(src='game/assets/scripts/setup.js', type='text/javascript', rel='script')
+    h1(id="beginTypingHeader")  Just begin typing to play!
+    div(id="timer")
+      h3 
+    div(id="challengeTextBox")
+      p(id="challengeTextView")  #{text}
+      h2(id="wpmCounter")
+      .container
+        .row.text-center
+          .col-md-3
+            canvas#game
+            // script(src='game/assets/scripts/setup.js', type='text/javascript', rel='script')
+
+
+          script(src='javascripts/ChallengeEntry.js')
+          script(src='javascripts/RaceTrack.js')
+          script(src='javascripts/TestChallenge.js')
+          script.
+            challengeBox.sourceText("#{text}");
   footer

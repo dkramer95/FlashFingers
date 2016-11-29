@@ -152,6 +152,7 @@ app.post('/updatePassword', auth, function(req, res) {
 	var confirmNewPassword = req.body.confirm_new_password;
 
 	req.checkBody("confirm_new_password", "Passwords must match").equals(newPassword);
+	req.checkBody("newPassword", "Password cannot be empty!").notEmpty();
 
 	// validate new password
 	var errors = req.validationErrors();
@@ -223,13 +224,54 @@ function validateRegistrationForm(req, res) {
 	return true;
 }
 
+app.get('/enterChallenge', function(req, res) {
+	res.render("enterChallenge");
+});
+
+app.get('/playChallenge', function(req, res) {
+	var db = createDBConnection();
+	var query = "SELECT * FROM `Challenges` ORDER BY Rand() LIMIT 1";
+	var text = "";
+
+	db.query(query, function(err, rows) {
+		if (err) throw err;
+		db.end();
+		text = rows[0].text;
+		res.render("challenge", { text: text });
+	});
+})
+
 app.get('/uploadChallenge', auth, function (req, res) {
     res.render("enterChallenge");
 });
 
+var maxLength = 500;
+
+function sanitizeChallengeInput(text) {
+	// remove line breaks
+	text = text.replace(/(\r\n|\n|\r)/gm," ");
+	
+	// remove excess white spaces
+	text = text.trim();
+	
+	// remove duplicate white spaces
+	text = text.replace(/ + (?= )/g, '');
+	
+	// only allow up to the maxLength amount
+	if (text.length > maxLength) {
+		text = text.substr(0, maxLength);
+	}
+	return text;
+}
+
 app.post('/processChallenge', function (req, res) {
     var userId = req.session.user.id;
     var text = req.body.challengeText;
+
+	text = sanitizeChallengeInput(text);
+	req.body.challengeText = text;
+
+	// maximum of 
     var diff = req.body.difficulty;
 
     //Insert into database
@@ -249,8 +291,6 @@ app.post('/processChallenge', function (req, res) {
 });
 
 // creates a connection to our mysql database
-// We might not need this later, since we are using ORM
-// But we'll keep for now, just in case
 function createDBConnection() {
 
     // connection settings
