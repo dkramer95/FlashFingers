@@ -35,6 +35,7 @@ window.onload = function() {
 var instance = null;
 
 
+
 // Creates a new challenge
 function Challenge(text) {
 	console.log('creating challenge: ' + text);
@@ -59,6 +60,7 @@ function Challenge(text) {
     this.textView = this.createTextView(),
     this.startIndex = 0,
     this.endIndex = 0,
+	this.highlightStyle = this.normalHighlight;
     
     this.canPlay = true,
         
@@ -67,6 +69,9 @@ function Challenge(text) {
 
 	console.log('challenge instance created');
 }
+
+Challenge.prototype.errorHighlight = "wordHighlightError";
+Challenge.prototype.normalHighlight = "wordHighlight";
 
 // starting key listener to beginn game play
 var beginKeyListener = function(e) {
@@ -140,6 +145,9 @@ Challenge.prototype.clearGame = function() {
 	this.canPlay = false;
     
     this.challengeBox.words = [];
+
+	var animation = new Animation([this.timer.timerCanvas]);
+	animation.fadeOut(1000);
 }
 
 // Called every second to update timer stuff
@@ -222,14 +230,20 @@ Challenge.prototype.updateWordIndicator = function() {
     textElement.appendChild(this.raceTrack.raceCanvas);
 }
 
-Challenge.prototype.getHighlightedString = function(sourceText, curWord) {
-    this.startIndex = sourceText.indexOf(curWord, this.endIndex);
+// updates our index positions in the text view for highlighting purposes
+Challenge.prototype.updateIndexes = function(curWord) {
+    this.startIndex = this.originalText.indexOf(curWord, this.endIndex);
     this.endIndex = (this.startIndex + curWord.length);
+}
+
+Challenge.prototype.getHighlightedString = function(sourceText, curWord) {
+	var startIndex = sourceText.indexOf(curWord, this.endIndex);
+	var endIndex = (startIndex + curWord.length);
     
 	// create string with highlighting
-	var resultStr = "";
-	var highlightedStr = '<span id="wordHighlight">' + sourceText.substr(this.startIndex, curWord.length) + '</span>';
-	resultStr = sourceText.substr(0, this.startIndex) + highlightedStr + sourceText.substr(this.endIndex);
+	var span = '<span id="' + this.highlightStyle + '">';
+	var highlightedStr = span + sourceText.substr(startIndex, curWord.length) + '</span>';
+	var resultStr = sourceText.substr(0, startIndex) + highlightedStr + sourceText.substr(endIndex);
 
 	return resultStr;
 }
@@ -298,6 +312,9 @@ function renderOutOfTime() {
 	overlay.appendChild(button);
 
 	document.body.appendChild(overlay);
+
+	var animation = new Animation([overlay]);
+	animation.fadeIn(1000);
 }
 
 // draws the game over screen
@@ -323,6 +340,9 @@ function renderGameOver(wpm) {
 
 	overlay.appendChild(results);
 	document.body.appendChild(overlay);
+
+	var animation = new Animation([overlay]);
+	animation.fadeIn(1000);
 }
 
 // gets a message based on the WPM measurement

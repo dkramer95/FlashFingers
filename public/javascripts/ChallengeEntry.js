@@ -83,6 +83,9 @@ ChallengeEntryBox.prototype.addToPage = function() {
 
 // Key press handler
 ChallengeEntryBox.prototype.keyPressed = function(e) {
+	// don't add to input if box is full
+	if (this.isFull()) { return; }
+	
 	switch (e.keyCode) {
 		case 32:	// spacebar
 			if (this.clearIfValid()) {
@@ -93,6 +96,15 @@ ChallengeEntryBox.prototype.keyPressed = function(e) {
 	var letterPressed = String.fromCharCode(e.keyCode);
 	this.textBuffer += letterPressed;
 	this.advance();
+}
+
+// checks to see if this text entry box is full and prevents
+// any further input if true
+ChallengeEntryBox.prototype.isFull = function() {
+	var ctx = this.canvas.getContext('2d');
+	var width = ctx.measureText(this.textBuffer).width;
+	var isFull = (width > (this.canvas.width - this.textStyle.fontSize));
+	return isFull;
 }
 
 // Handler function for pressing backspace key
@@ -130,6 +142,7 @@ ChallengeEntryBox.prototype.clearIfValid = function() {
 		this.correctWords++;
 		didClear = true;
         challenge.updateWordIndicator();
+		challenge.updateIndexes(nextWord);
 	} 
 	// word is incorrect -- put back
 	else {
@@ -147,13 +160,16 @@ ChallengeEntryBox.prototype.advance = function() {
 	// in the middle of typing, but it is correct so far	
 	if (this.textBuffer == nextWord.substr(0, this.textBuffer.length)) {
 		this.textStyle.color = this.correctColor; 
+		challenge.highlightStyle = challenge.normalHighlight;
 	}
 	// word is incorrect somehow
 	else {
 		this.textStyle.color = this.errorColor; 
+		challenge.highlightStyle = challenge.errorHighlight;
 	}
 	this.words.push(nextWord);
 	this.draw();
+	challenge.updateWordIndicator();
 }
 
 // special handler for keydown event

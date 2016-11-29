@@ -1,9 +1,9 @@
 // Contains functions for animating elements
-var isRunning = false;
 
 // Animations an array of html elements
 function Animation(elements) {
 	this.elements = elements;
+	this.isRunning = false;
 	hideElements(elements);
 }
 
@@ -19,36 +19,40 @@ function showElements(elements) {
 	});
 }
 
-Animation.prototype.fadeIn = function(duration) {
-	var currentOpacity = 0.0;
-	const endOpacity = 1.0;
-    var animation = this;
-	
-    if (!isRunning) {
-        var fadeTimer = setInterval(function() {
-            if (currentOpacity < endOpacity) {
-                isRunning = true;
-                animation.elements.forEach(function(el) {
-                    el.style.visibility = "visible";
-                    el.style.opacity = currentOpacity; 
-                });
-                currentOpacity += 0.015;
-            } else {
-                isRunning = false;
-                clearInterval(fadeTimer);
-            }
-        }, 20);
-    }
+// creates a fade animation of all the elements within this animation
+Animation.prototype.fade = function(duration, startOpacity, delta, endCondition) {
+	const intervalTime = 20;
+	var currentOpacity = startOpacity;
+	var fadeDelta = ((1.0 / duration) * intervalTime) * Math.sin(delta);
+	var animation = this;
 
-//	var fadeTimer = setInterval(function() {
-//		if ((currentOpacity < endOpacity)) {
-//			this.elements.forEach(function(el) {
-//				el.style.opacity = currentOpacity;
-//			});
-//			currentOpacity += 0.015;
-//		} else {
-//			clearInterval(fadeTimer);
-//			fadeTimer = null;
-//		}
-//	});
+	if (!animation.isRunning) {
+		var fadeTimer = setInterval(function() {
+			if (endCondition(currentOpacity)) {
+				animation.isRunning = true;
+				animation.elements.forEach(function(el) {
+					el.style.visibility = "visible";
+					el.style.opacity = currentOpacity;	
+				});
+				currentOpacity += fadeDelta;
+			} else {
+				animation.isRunning = false;
+				clearInterval(fadeTimer);
+			}
+		}, intervalTime);
+	}
+}
+
+// fades in all elements for the specified duration
+Animation.prototype.fadeIn = function(duration) {
+	this.fade(duration, 0.0, 1, function(opacity) {
+		return opacity < 1.0;
+	});
+}
+
+// fade out all elements for the specified duration
+Animation.prototype.fadeOut = function(duration) {
+	this.fade(duration, 1.0, -1, function(opacity) {
+		return opacity > 0.0;
+	});
 }

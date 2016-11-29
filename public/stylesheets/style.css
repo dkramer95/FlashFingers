@@ -195,6 +195,13 @@ form input[type="submit"] {
 	font-weight: bold;
 }
 
+#wordHighlightError {
+	padding: 1px 5px;
+	background: rgba(120, 0, 20, 0.25);
+	font-weight: bold;
+	color: #800;
+}
+
 button {
     margin-top:5%;
     margin-left:10%;
