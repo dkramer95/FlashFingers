@@ -1,6 +1,10 @@
 var scriptsLoaded = 0;
 var challenge = null;
 
+// configuration options
+// max width of the box
+var boxWidth = 720;
+
 // loads all required scripts needed for the game
 function loadScripts() {
     var scripts = ['ChallengeEntry', 'Animate', 'Timer', 'RaceTrack'];
@@ -29,6 +33,7 @@ window.onload = function() {
 
 // instance of this challenge
 var instance = null;
+
 
 // Creates a new challenge
 function Challenge(text) {
@@ -236,6 +241,7 @@ Challenge.prototype.createTextView = function() {
     
     var textView = document.createElement('p');
     textView.setAttribute('id', 'challengeTextView');
+	textView.style.width = boxWidth + "px";
     textView.innerHTML = this.originalText;
     textBox.appendChild(textView);
     
@@ -260,11 +266,12 @@ Challenge.prototype.createTimerView = function() {
 
 // Creates the text box for text entry of a challenge
 Challenge.prototype.createChallengeBox = function() {
-	var challengeBox = new ChallengeEntryBox(new TextStyle('Antic Slab', 40), 750, 50);
+	var width = (boxWidth - 50);
+	var challengeBox = new ChallengeEntryBox(new TextStyle('Antic Slab', 40), width, 50);
 		challengeBox.colors({
 			errorColor: "#E11",
-			correctColor : "#2B1",
-			bgColor : "#EEE",
+			correctColor: "#2B1",
+			bgColor: "#EEE",
 		});
 	challengeBox.sourceText(this.originalText);
     return challengeBox;

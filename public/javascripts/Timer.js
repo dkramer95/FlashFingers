@@ -33,6 +33,8 @@ CircleTimer.prototype.draw = function() {
 
 CircleTimer.prototype.drawBG = function(ctx) {
 	ctx.fillStyle = "#FFF";
+	ctx.strokeStyle = "#d6d6b8";
+	ctx.lineWidth = 2;
 	ctx.beginPath();
 
 	var centerX = (this.width / 2);
@@ -41,6 +43,7 @@ CircleTimer.prototype.drawBG = function(ctx) {
 	ctx.arc(centerX, centerY, this.radius, 0, 2 * Math.PI, false);
 	ctx.closePath();
 	ctx.fill();
+	ctx.stroke();
 }
 
 function radians(angle) {

@@ -1,20 +1,30 @@
 extends layout
+head
+  meta(http-equiv='X-UA-Compatible', content='IE=edge')
+  meta(name='viewport', content='width=device-width,initial-scale=1')
+  title FLASH FINGERS
+  link(rel='stylesheet', href='css/bootstrap.css')
+  link(rel='stylesheet', href='css/style.css')
+  script(src='scripts/canvas.js')
 block content
-  header
-    #header.row
-      .col-md-6.text-left
-        h1.title-super.text-thin Flash Fingers
-      .col-md-4
-      .col-md-2.text-right
-        p#loginName Welcome, User
-        p#logout Logout
-  content
-    div(id='challengeContainer')
-      h1(id='beginTypingHeader')  Press spacebar to play!
-      h2(id='wpmCounter')
-      div(id='challengeTextBox')
+  .container
+    header
+      #header.row
+        .col-md-6.text-left
+          h1.title-super.text-thin Flash Fingers
+        .col-md-4
+        .col-md-2.text-right
+          p#loginName Welcome, User
+          p#logout Logout
+    content
+      .col-lg-8
+        #challengeContainer
+        h1#beginTypingHeader
+          Press spacebar to play!
+      .pull-right
+        canvas#statsCanvas(width='300', height='900')
+      .pull-bottom
+        footer
       script(src='javascripts/Challenge.js')
       script.
         var text = "#{text}";
-
-      footer

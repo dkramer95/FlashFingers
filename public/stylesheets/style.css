@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Antic+Slab');
 body {
     font-family: 'Antic Slab', serif;
+	background: #FFFFF1;
     color: #4E8E8D;
     font-weight: 400;
-    background-color: #A4DADA;
     overflow-x: hidden;
 }
 p {
@@ -104,6 +104,7 @@ form input[type="submit"] {
 	margin: 5px auto;
 	border: 2px solid #4E8E8D;
 	background: #fff;
+    box-shadow: 5px 5px 5px #888888;
 	width: 800px;
 	padding: 20px;
 	font-size: 25px;
@@ -188,15 +189,55 @@ form input[type="submit"] {
 	display: block;
 }
 
-/* #timer h3 { */
-/* 	color: #4E8E8D; */
-/* 	vertical-align: middle; */
-/* 	font-size: 30px; */
-/* 	text-align: center; */
-/* } */
-
 #wordHighlight {
 	padding: 1px 5px;
 	background: rgba(0, 90, 20, 0.25);
 	font-weight: bold;
 }
+
+button {
+    margin-top:5%;
+    margin-left:10%;
+    border-radius: 10%;
+    padding: 16px;
+    font-size: 20px;
+    background-color: white;
+    border: 2px solid #4E8E8D;
+    box-shadow: 10px 10px 5px #888888;
+}
+.text-muted {
+    color:#BCBB88;
+}
+.text-thin {
+    font-weight: 300;
+}
+.title-super {
+    font-size: 60px;
+}
+.title-logo {
+    margin-top: 20px;
+}
+#header {
+    border-bottom-style: double;
+    box-shadow: 5px 5px 5px #888888;
+}
+
+#statsCanvas {
+    border:1px solid #000000;
+    border-top: hidden;
+    border-color: #4E8E8D;
+}
+
+#loginName {
+    padding-right: 25%;
+    padding-top: 15%;
+    text-shadow: currentColor;
+}
+#logout {
+    padding-right: 25%;
+    margin-top: -3%;
+}
+#challengeSelect {
+    margin-right: 35%;
+}
+
