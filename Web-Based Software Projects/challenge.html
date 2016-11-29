@@ -1,43 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>FLASH FINGERS</title>
-    <link href="https://fonts.googleapis.com/css?family=Antic+Slab" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="game/libraries/createjs/createjs-2015.11.26.min.js" type="text/javascript" rel="script" ></script>
-
-</head>
-<body>
-<header>
-    <div class="row" id="header">
-        <div class="col-md-6 text-left">
-            <h1 class="title-super text-thin">Flash Fingers</h1>
-        </div>
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-2 text-right">
-            <p id="loginName">Welcome, User</p>
-            <p id="logout">Logout</p>
-        </div>
-    </div>
-</header>
-<content>
-    <div class="pull-right">
-        <canvas width="300" height="900" id="statsCanvas"></canvas>
-    </div>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>FLASH FINGERS</title>
+        <link href="https://fonts.googleapis.com/css?family=Antic+Slab" rel="stylesheet">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="scripts/canvas.js"></script>
+    </head>
+    <body>
     <div class="container">
-        <div class="row text-center">
-            <div class="col-md-3">
-                <canvas id="game"></canvas>
-                <script src="game/assets/scripts/setup.js" type="text/javascript" rel="script"></script>
+        <header>
+            <div class="row" id="header">
+                <div class="col-md-6 text-left">
+                    <h1 class="title-super text-thin">Flash Fingers</h1>
+                </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-2 text-right">
+                    <p id="loginName">Welcome, User</p>
+                    <p id="logout">Logout</p>
+                </div>
             </div>
-        </div>
+        </header>
+        <content>
+            <div class="pull-right">
+                <canvas width="300" height="900" id="statsCanvas"></canvas>
+            </div>
+
+            Put game here
+
+
+        </content>
+        <footer>
+        <p>&copy Footer</p>
+        </footer>
     </div>
-</content>
-<footer>
-</footer>
-</body>
+    </body>
 </html>
