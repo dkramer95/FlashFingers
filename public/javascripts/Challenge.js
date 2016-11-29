@@ -1,19 +1,38 @@
-// load in other scripts needed to create a challenge
+var scriptsLoaded = 0;
+var challenge = null;
+
+// loads all required scripts needed for the game
 function loadScripts() {
-    var scripts = ['RaceTrack', 'Animate', 'Timer', 'ChallengeEntry'];
+    var scripts = ['ChallengeEntry', 'Animate', 'Timer', 'RaceTrack'];
     scripts.forEach(function(s) {
         var script = document.createElement('script');
         script.src = 'javascripts/' + s + '.js';
         document.head.appendChild(script);
+
+		// make sure all required scripts are loaded before we
+		// create the challenge
+		script.onload = function() {
+			++scriptsLoaded;
+
+			if (scriptsLoaded == scripts.length) {
+				challenge = new Challenge(text);	
+			}
+		}
     });
 }
-loadScripts();
+
+// load scripts when window loads
+window.onload = function() {
+	loadScripts();
+	console.log('scripts loaded..');
+}
 
 // instance of this challenge
 var instance = null;
 
 // Creates a new challenge
 function Challenge(text) {
+	console.log('creating challenge: ' + text);
     instance = this,
 	this.originalText = text,
 	this.isPlaying = false,
@@ -40,6 +59,8 @@ function Challenge(text) {
         
     // finish up
     this.initBeginState();
+
+	console.log('challenge instance created');
 }
 
 // starting key listener to beginn game play

@@ -66,7 +66,8 @@ RaceTrack.prototype.drawLines = function(ctx, canvasWidth, canvasHeight) {
 }
 
 // generate random sprite
-var spriteNum = parseInt(Math.random() * 3);
+var spriteCount = 4;
+var spriteNum = parseInt(Math.random() * spriteCount);
 
 // sprite image needed to draw from
 var spriteImg = document.createElement("img");

@@ -1,5 +1,4 @@
 extends layout
-
 block content
   header
     #header.row
@@ -12,40 +11,10 @@ block content
   content
     div(id='challengeContainer')
       h1(id='beginTypingHeader')  Press spacebar to play!
-      // div(id='timer')
-      // canvas(id='timer', width=150, height=150)
-        h3
       h2(id='wpmCounter')
       div(id='challengeTextBox')
-        // p(id='challengeTextView') null
-    script(src='javascripts/ChallengeEntry.js')
-    script(src='javascripts/Animate.js')
-    script(src='javascripts/Timer.js')
-    script(src='javascripts/RaceTrack.js')
-    // script(src='javascripts/TestChallenge.js')
-    script(src='javascripts/Challenge.js')
-    script.
-     var challenge = new Challenge("#{text}");
-      // challengeBox.sourceText("#{text}");
-    // script(src='game/libraries/createjs/createjs-2015.11.26.min.js', type='text/javascript', rel='script')
-    // .pull-right
-    //   canvas#statsCanvas(width='300', height='900')
-    // h1(id="beginTypingHeader")  Just begin typing to play!
-    // div(id="timer")
-    //   h3 
-    // div(id="challengeTextBox")
-    //   p(id="challengeTextView")  #{text}
-    //   h2(id="wpmCounter")
-    //   .container
-    //     .row.text-center
-    //       .col-md-3
-    //         canvas#game
-    //         // script(src='game/assets/scripts/setup.js', type='text/javascript', rel='script')
-    //
-    //
-    //       script(src='javascripts/ChallengeEntry.js')
-    //       script(src='javascripts/RaceTrack.js')
-    //       script(src='javascripts/TestChallenge.js')
-    //       script.
-    //         challengeBox.sourceText("#{text}");
-  footer
+      script(src='javascripts/Challenge.js')
+      script.
+        var text = "#{text}";
+
+      footer
