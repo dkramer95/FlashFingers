@@ -13,7 +13,6 @@ function RaceTrack() {
 function createRaceCanvas() {
 	var canvas = document.createElement('canvas');
 	canvas.setAttribute('id', 'raceCanvas');
-	canvas.width = 500; 
 	canvas.height = 40;
 
 	canvas.style.display = "block";
@@ -54,7 +53,7 @@ RaceTrack.prototype.drawLines = function(ctx, canvasWidth, canvasHeight) {
 
 	for (var j = 0; j < lineCount; ++j) {
 		ctx.fillRect(lineX, lineY, lineWidth, lineHeight);
-		lineX += lineWidth + lineGap;	
+		lineX += lineWidth + lineGap;
 	}
 
 	ctx.fillStyle = "#666";
