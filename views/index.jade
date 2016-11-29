@@ -7,8 +7,8 @@ block content
         h1.title-super.text-thin Flash Fingers
       .col-md-4
       .col-md-2.text-right
-        p#loginName	Welcome Guest
-        a(href='/login') Login
+        p#loginName Welcome, Guest
+        a(href='/login')   Login
   content
     .pull-right
       canvas#statsCanvas(width='300', height='900')
@@ -16,7 +16,6 @@ block content
       .row.text-center
         .col-md-3
           .row
+           a(href='/playChallenge')
             button(type='button') Enter a Challenge
-          .row
-            button(type='button') Upload a Challenge
   footer
