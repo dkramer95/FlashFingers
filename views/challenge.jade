@@ -5,7 +5,7 @@ head
   title FLASH FINGERS
   link(rel='stylesheet', href='css/bootstrap.css')
   link(rel='stylesheet', href='css/style.css')
-  script(src='scripts/canvas.js')
+  // script(src='scripts/canvas.js')
 block content
   .container
     header
@@ -17,12 +17,9 @@ block content
           p#loginName Welcome, User
           p#logout Logout
     content
-      .col-lg-8
         #challengeContainer
         h1#beginTypingHeader
           Press spacebar to play!
-      .pull-right
-        canvas#statsCanvas(width='300', height='900')
       .pull-bottom
         footer
       script(src='javascripts/Challenge.js')

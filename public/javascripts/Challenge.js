@@ -29,7 +29,7 @@ function loadScripts() {
 window.onload = function() {
 	loadScripts();
 	console.log('scripts loaded..');
-	// text = "DEBUG";
+	text = "\"DEBUG\"";
 }
 
 // instance of this challenge
@@ -186,12 +186,12 @@ Challenge.prototype.animateRainbow = function() {
 		} else {
 			var gradient = ctx.createLinearGradient(0, 0, currentWidth, 0);
 			gradient.addColorStop(0, "red");
-			gradient.addColorStop(1 / 6, "orange");
-			gradient.addColorStop(2 / 6, "yellow");
-			gradient.addColorStop(3 / 6, "green");
-			gradient.addColorStop(4 / 6, "blue");
-			gradient.addColorStop(5 / 6, "indigo");
-			gradient.addColorStop(1, "violet");
+			gradient.addColorStop(1 / 6, "rgba(255, 165, 0, 50)");
+			gradient.addColorStop(2 / 6, "rgba(255, 255, 0, 100)");
+			gradient.addColorStop(3 / 6, "rgba(0, 255, 0, 50)");
+			gradient.addColorStop(4 / 6, "rgba(0, 0, 255, 75)");
+			gradient.addColorStop(5 / 6, "rgba(128, 0, 128, 80)");
+			gradient.addColorStop(1, "rgba(147, 112, 219, 150)");
 
 			ctx.fillStyle = gradient;
 			ctx.fillRect(0, 0, currentWidth, height);

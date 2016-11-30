@@ -65,9 +65,14 @@ RaceTrack.prototype.drawLines = function(ctx, canvasWidth, canvasHeight) {
 	ctx.fillRect(canvasWidth - 10, 0, 10, canvasHeight);
 }
 
+function getRandomSprite() {
+	var spriteNum = parseInt(Math.random() * spriteCount);
+	return spriteNum;
+}
+
 // generate random sprite
 var spriteCount = 4;
-var spriteNum = parseInt(Math.random() * spriteCount);
+var spriteNum = getRandomSprite();
 
 // sprite image needed to draw from
 var spriteImg = document.createElement("img");
@@ -89,6 +94,4 @@ RaceTrack.prototype.drawPlayer = function(ctx, canvasWidth, canvasHeight) {
 	// draw sprite
 	ctx.drawImage(spriteImg, offsetX, offsetY, spriteWidth, spriteHeight,
 				  playerX, playerY, spriteWidth, spriteHeight);
-
 }
-
