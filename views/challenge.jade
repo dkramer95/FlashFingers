@@ -5,7 +5,6 @@ head
   title FLASH FINGERS
   link(rel='stylesheet', href='css/bootstrap.css')
   link(rel='stylesheet', href='css/style.css')
-  // script(src='scripts/canvas.js')
 block content
   .container
     header
@@ -16,12 +15,11 @@ block content
         .col-md-2.text-right
           p#loginName Welcome, User
           p#logout Logout
-    content
-        #challengeContainer
-        h1#beginTypingHeader
-          Press spacebar to play!
-      .pull-bottom
-        footer
-      script(src='javascripts/Challenge.js')
-      script.
-        var text = "#{text}";
+      .pull-top
+     #challengeContainer
+       h1#beginTypingHeader
+         Press spacebar to play!
+      footer
+    script(src='javascripts/Challenge.js')
+    script.
+      var text = "#{text}";

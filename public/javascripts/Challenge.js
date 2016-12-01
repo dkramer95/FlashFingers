@@ -28,8 +28,8 @@ function loadScripts() {
 // load scripts when window loads
 window.onload = function() {
 	loadScripts();
-	console.log('scripts loaded..');
-	text = "\"DEBUG\"";
+	// console.log('scripts loaded..');
+	// text = "\"DEBUG\"";
 }
 
 // instance of this challenge
