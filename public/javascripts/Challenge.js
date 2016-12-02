@@ -19,10 +19,18 @@ function loadScripts() {
 			++scriptsLoaded;
 
 			if (scriptsLoaded == scripts.length) {
+				text = decode(text);
 				challenge = new Challenge(text);	
 			}
 		}
     });
+}
+
+// converts html entities into the correct character
+function decode(srcText) {
+	var fixedText =  srcText.replace(/&quot;/g, '\"')
+							.replace(/&apos;/g, '\'');
+	return fixedText;
 }
 
 // load scripts when window loads
@@ -63,9 +71,8 @@ function Challenge(text) {
     this.startIndex = 0,
     this.endIndex = 0,
 	this.typoCount = 0,
+	this.canPlay = true,
 	this.highlightStyle = this.normalHighlight;
-    
-    this.canPlay = true,
         
     // finish up
     this.initBeginState();
@@ -363,6 +370,7 @@ Challenge.prototype.createRaceTrack = function() {
     return raceTrack;
 }
 
+
 // draws the overlay for running out of time
 function renderOutOfTime() {
 	var overlay = document.createElement("div");
@@ -379,6 +387,14 @@ function renderOutOfTime() {
 
 	var animation = new Animation([overlay]);
 	animation.fadeIn(1000);
+}
+
+function createOverlay(id, body) {
+	var overlay = document.createElement("div");
+	overlay.setAttribute('id', id);
+
+	overlay.appendChild(body);
+	document.body.appendChild(overlay);
 }
 
 // draws the game over screen

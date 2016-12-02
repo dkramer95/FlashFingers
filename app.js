@@ -61,7 +61,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // url mapping to actions
-app.use('/', index);
+// app.use('/', index);
 app.use('/login', login);
 app.use('/register', register);
 app.use('/challenge', challenge);
@@ -89,6 +89,14 @@ var auth = function (req, res, next) {
 app.get('/login', function (req, res) {
 	res.send("hello: " + req.session.user);
 });
+
+app.get('/', function(req, res) {
+	if (req.session.user) {
+		res.render('profile', { title: 'FlashFingers', user: req.session.user });
+	} else {
+		res.render('index', { title: 'FlashFingers' });
+	}
+})
 
 // login
 app.post('/login', function (req, res) {
@@ -143,7 +151,7 @@ app.post('/registerUser', function(req, res) {
 });
 
 app.get('/changePassword', auth, function(req, res) {
-	res.render('changePassword');
+	res.render('changePassword', { user: req.session.user });
 });
 
 
@@ -226,7 +234,7 @@ function validateRegistrationForm(req, res) {
 }
 
 app.get('/enterChallenge', function(req, res) {
-	res.render("enterChallenge");
+	res.render("enterChallenge", { user: req.session.user });
 });
 
 app.get('/playChallenge', function(req, res) {
@@ -238,7 +246,7 @@ app.get('/playChallenge', function(req, res) {
 		if (err) throw err;
 		db.end();
 		text = rows[0].text;
-		res.render("challenge", { text: text });
+		res.render("challenge", { text: text, user: req.session.user });
 	});
 })
 
@@ -251,12 +259,13 @@ var maxLength = 500;
 function sanitizeChallengeInput(text) {
 	// remove line breaks
 	text = text.replace(/(\r\n|\n|\r)/gm," ");
-	
 	// remove excess white spaces
 	text = text.trim();
-	
 	// remove duplicate white spaces
 	text = text.replace(/ + (?= )/g, '');
+
+	// remove any non-standard quotes
+	text = text.replace(/[\u0222\u201c\u201d]/g, '\"');
 	
 	// only allow up to the maxLength amount
 	if (text.length > maxLength) {

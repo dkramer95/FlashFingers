@@ -7,6 +7,24 @@ html
     link(href='https://fonts.googleapis.com/css?family=Antic+Slab', rel='stylesheet')
     link(rel='stylesheet', href='stylesheets/bootstrap.css')
     link(rel='stylesheet', href='stylesheets/style.css')
-    script(src='javascripts/canvas.js')
   body
+    block header
+      .container
+       header
+        #header.row
+          .col-md-6.text-left
+            a(href='/' id='headerLink')
+              h1.title-super.text-thin Flash Fingers
+
+          if user
+           .col-md-4
+           .col-md-2.text-right
+             p#loginName  Welcome, #{user.username}
+             a(href='/logout' class='loginLogout')  Logout
+          else
+           .col-md-4
+           .col-md-2.text-right
+             p#loginName  Welcome, Guest
+             a(href='/login' class='loginLogout')  Login
     block content
+

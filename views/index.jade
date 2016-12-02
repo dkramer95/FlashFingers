@@ -1,27 +1,17 @@
 extends layout
-head
-  meta(http-equiv='X-UA-Compatible', content='IE=edge')
-  meta(name='viewport', content='width=device-width,initial-scale=1')
-  title FLASH FINGERS
-  link(rel='stylesheet', href='css/bootstrap.css')
-  link(rel='stylesheet', href='css/style.css')
+
 block content
   .container
-    header
-      #header.row
-        .col-md-6.text-left
-          h1.title-super.text-thin Flash Fingers
-        .col-md-4
-        .col-md-2.text-right
-          p#loginName Welcome, Guest
-          a(href='/login')   Login
     content
-      .pull-right
-        canvas#statsCanvas(width='300', height='900')
-      .container
-        .row.text-center
-          .col-md-3
-            .row
-             a(href='/playChallenge')
-              button(type='button') Enter a Challenge
+
+    if user
+     .pull-right
+       canvas#statsCanvas(width='300', height='900')
+
+    .container
+      .row.text-center
+        .col-md-3
+          .row
+           a(href='/playChallenge')
+            button(type='button') Enter a Challenge
     footer

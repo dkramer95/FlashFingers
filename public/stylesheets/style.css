@@ -48,6 +48,14 @@ button {
     padding-top: 12%;
     text-shadow: currentColor;
 }
+
+.challengeUploadBox {
+	margin: 20px;
+}
+
+.loginLogout {
+	margin: 5px;
+}
 #logout {
     padding-right: 25%;
     margin-top: -3%;
@@ -215,7 +223,13 @@ button {
     background-color: white;
     border: 2px solid #4E8E8D;
     box-shadow: 10px 10px 5px #888888;
+	text-decoration: none;
 }
+
+div .row > a {
+	border-bottom: none;
+}
+
 .text-muted {
     color:#BCBB88;
 }
@@ -228,9 +242,21 @@ button {
 .title-logo {
     margin-top: 20px;
 }
+
+.centerBox {
+	display: block;
+	margin: 0 auto;
+	width: 500px;
+	text-align: center;
+}
+
 #header {
     border-bottom-style: double;
     box-shadow: 5px 5px 5px #888888;
+}
+
+#headerLink {
+	color: #4E8E8D;
 }
 
 #statsCanvas {
@@ -244,10 +270,12 @@ button {
     padding-top: 15%;
     text-shadow: currentColor;
 }
+
 #logout {
     padding-right: 25%;
     margin-top: -3%;
 }
+
 #challengeSelect {
     margin-right: 35%;
 }
